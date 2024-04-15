@@ -1,3 +1,6 @@
+if(process.env.NODE_ENV !="production"){
+    require("dotenv").config();
+}
 const express=require('express');
 const app=express();
 const mongoose=require('mongoose');
@@ -7,7 +10,8 @@ const Product=require('./models/product.js');
 const Review=require('./models/review.js');
 const multer=require('multer');
 const path=require("path");
-require('dotenv').config();
+const dbUrl=process.env.ATLAS_LINK;
+
 const session=require("express-session");
 const {storage}=require("./CloudConfig.js");
 const upload=multer({storage});
@@ -16,6 +20,7 @@ const {listingSchema,reviewSchema}=require("./Schema.js");
 const flash=require("connect-flash");
 const passport=require("passport");
 const LocalStrategy=require("passport-local").Strategy;
+const MongoStore=require("connect-mongo");
 const User=require("./models/user.js")
 app.set("views",path.join(__dirname,"/views"));
 app.use(methodOverride('_method'));
@@ -27,7 +32,16 @@ app.engine("ejs",ejsMate);
 
 app.use(express.static("public"));
 app.use(express.static(path.join(__dirname,"public/")));
+const store=MongoStore.create({
+    mongoUrl:dbUrl,
+    crypto:{
+        secret:process.env.SECRET,
+    },
+    touchAfter:24*3600
+    })    
+   
 const sessionObject={
+    store,
     secret:"mysecret12333",
     resave:false,
     saveUninitialized:true,
@@ -61,7 +75,7 @@ main()
 .catch((err)=>console.log(err));
 
 async function main(){
-    await mongoose.connect('mongodb://127.0.0.1:27017/harmonyServe')
+    await mongoose.connect(dbUrl);
 }
 // function asyncWrap(fn){
 //     return function(req,res,next){
