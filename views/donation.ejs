@@ -1,0 +1,52 @@
+<% layout("/layouts/boilerplate.ejs") %>
+<body>
+    
+    <div class="row">
+
+       <div class="col-8 offset-2">
+        <h3 style="margin-top: 2rem;">Donation Form</h3>
+        <form  style="margin-top: 2rem;" method="POST" action="/donate" novalidate class="needs-validation">
+           <div class="mb-3">
+            <label class="form-label" for="title">Full Name</label>
+            <input name="listings[title]" placeholder="Enter Title" type="text" id="title" class="form-control" required>
+            <div class="valid-feedback">looks good!</div>
+            <div class="invalid-feedback">Please enter a valid input</div>   
+        </div>
+    <div class="mb-3">
+        
+        <label class="form-label" for="price">Donation Amount (in rupees)</label>
+        <input required name="listings[price]" placeholder="Enter price" type="number" id="price" class="form-control">
+        <div class="valid-feedback">looks good!</div>
+        <div class="invalid-feedback">Please enter a valid input</div>
+    </div>
+        
+          <div class="mb-3">
+            <label class="form-label" for="description">Give a short sweet message</label>
+            <textarea  name="listings[description]" placeholder="Enter description" type="text" id="description" class="form-control"></textarea>
+            <div class="valid-feedback">looks good!</div>
+            <div class="invalid-feedback">Please enter a valid input</div>
+          </div>
+           <div class="row">
+           <div class="col-md-4 mb-3" >
+            <label class="form-label" for="category">Email</label>
+            <input required name="listings[category]" placeholder="Enter category" type="text" id="category" class="form-control">
+            <div class="valid-feedback">looks good!</div>
+            <div class="invalid-feedback">Please enter a valid input</div> 
+        </div>
+         
+            <div class="col-md-8 mb-3">
+                <label class="form-label" for="location">Phone Number</label>
+         
+                <input required name="listings[location]" placeholder="Enter location" type="text" id="location" class="form-control">
+                <div class="valid-feedback">looks good!</div>
+                <div class="invalid-feedback">Please enter a valid input</div>
+            </div>
+
+           </div>
+            <br><br>
+            <button class="btn btn-success"> Donate</button>
+            <br><br><br>
+        </form>
+       </div>
+    </div>
+</body>

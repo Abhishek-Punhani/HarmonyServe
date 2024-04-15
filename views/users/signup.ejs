@@ -1,0 +1,29 @@
+<% layout("/layouts/boilerplate") %>
+
+<body>
+   
+<div class="row mt-6" style="height: 100vh;">
+   
+    <div class="col-6 offset-3">
+    
+     <form  style="margin-top: 2rem;" method="POST" action="/signup" novalidate class="needs-validation">
+        <h3 class="mb-3">Signup on Harmony Serve</h3>
+        <div class="mb-3">
+         <label class="form-label" for="username">Username :</label>
+         <input name="username" placeholder="Enter username" type="text" id="username" class="form-control" required>
+      
+         <div class="invalid-feedback">Please enter a valid input</div>   
+         </div>
+         <div class="mb-3">
+            <label class="form-label" for="email">Email:</label>
+            <input name="email" placeholder="Enter email" type="text" id="email" class="form-control" required>
+       </div>
+       <div class="mb-3">
+        <label class="form-label" for="pass">Password :</label>
+        <input name="pass" placeholder="Enter password" type="password" id="pass" class="form-control" required>
+   </div>
+<button class="btn btn-success">Signup</button>
+     </form>
+          </div>
+     </div>
+</body>

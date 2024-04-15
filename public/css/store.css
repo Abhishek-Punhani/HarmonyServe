@@ -1,0 +1,69 @@
+.header_content{
+    padding-bottom: 3rem;
+}
+.header_content h1{
+    font-size: 3.5vmin;
+}
+.header_content h4{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 300;
+    margin-bottom: 4rem;
+}
+.btns{
+    margin: 1rem auto;
+}
+.btn-green{
+    color:black !important;
+    border: 2px solid black !important;
+    background-color:burlywood !important;
+    margin-right: 7rem;
+}
+.btn-green:hover{
+color: black !important;
+background-color: white !important;
+border: none !important;
+}
+.search-btn{
+    margin-top: 2rem;
+    text-align: center
+}
+.search-nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 1rem 4rem;
+}
+.btn-search{
+    height: 2rem;
+    width: 5rem;
+    margin-top: 0.75rem  ;
+    border-radius: 3.5rem;
+   
+}
+.search-btn input{
+    margin-top: 0.3rem;
+    border: 1.5px solid black;
+    border-radius: 3rem;
+    
+}
+.store-body{
+    display: flex;
+    flex-direction:row;
+    justify-content: start;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 7rem;
+}
+.shopping-card{
+    margin: 2rem 3rem;
+    height: 325px;
+    width: 200px;
+    border: 1px solid black;
+}
+.card-img-top{
+    height: 200px;
+}
+.item{
+    text-decoration: none;
+}

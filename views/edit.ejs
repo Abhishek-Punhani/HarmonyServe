@@ -1,0 +1,60 @@
+<% layout("/layouts/boilerplate.ejs") %>
+<body>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="row">
+
+       <div class="col-8 offset-2">
+        <h3 style="margin-top: 2rem;">Edit Your Current Listing</h3>
+        <form  style="margin-top: 2rem;" method="POST" action="/store/<%=product._id%>/?_method=PATCH" novalidate class="needs-validation" enctype="multipart/form-data">
+           <div class="mb-3">
+            <label class="form-label" for="title">Title</label>
+            <input name="listings[title]" value="<%=product.title%>" type="text" id="title" class="form-control" required>
+            
+        </div>
+    <div class="mb-3">
+        
+        <label class="form-label" for="price">Price</label>
+        <input required name="listings[price]" value="<%=product.price%>" type="number" id="price" class="form-control">
+
+    </div>  
+            <div class="mb-3">
+               Original image <br>
+               <img src="<%=image_url%>" alt="Original_image">
+            </div>
+
+           <div class="mb-3">
+            <label class="form-label" for="url">Upload_Image</label>
+            <input  name="url"  type="file" id="url" class="form-control">
+            
+           </div>
+        
+          <div class="mb-3">
+            <label class="form-label" for="description">Give a short description</label>
+            <textarea  name="listings[description]"  type="text" id="description" class="form-control"><%=product.description%></textarea>
+  
+          </div>
+           <div class="row">
+           <div class="col-md-4 mb-3" >
+            <label class="form-label" for="category">Category</label>
+            <input required name="listings[category]" value="<%=product.category%>" type="text" id="category" class="form-control">
+          
+        </div>
+         
+            <div class="col-md-8 mb-3">
+                <label class="form-label" for="location">Location</label>
+         
+                <input required name="listings[location]" value="<%=product.location%>" type="text" id="location" class="form-control">
+           
+            </div>
+
+           </div>
+            <br><br>
+            <button class="btn btn-danger"> Add</button>
+            <br><br><br>
+        </form>
+       </div>
+    </div>
+</body>

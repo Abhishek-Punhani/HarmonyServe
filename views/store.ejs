@@ -1,0 +1,55 @@
+<% layout("/layouts/store-boil.ejs") %>
+<body>
+    
+ 
+      <header>
+        <div style="background-image: url(./assets/store.jpg);" class="header">
+          
+            <div style="background-color: none;" class="header_content">
+                <h1>Crafting Dreams, Empowering Lives: Support Artisans at Craft Haven.</h1>
+                <div class="line"></div>
+                <h4>Elevate Your Style, Empower Artisans: Every Purchase at Craft Haven Supports Traditional Craftsmanship and Rural Livelihoods.</h3>
+                <div class="btns">
+                    <a class="btn btn-green btn-outline-light" href="#shop">SHOP NOW</a>
+                    <a href="/new" type="button" class="btn btn-green btn-outline-light">SELL </a>
+                </div>
+            </div>
+          </div>
+      </header>
+     <section id="shop">
+
+       <div class="search-nav">
+        <div class="search-btn">
+            <form class="d-flex" method="get" action="/store">
+                <input style="height: 2.5rem;width: 20rem;" class="form-control search-input me-2" type="text" id="serach" placeholder="Search" aria-label="Search" name="query"  >
+                <button class="btn btn-sm btn-search btn-outline-success" type="submit">Search</button>
+              </form>
+           </div>
+           <div class="donate-btn">
+            <a href="/new" type="button" style="height: 2rem;right: 3rem;margin-right: 0;padding-bottom: 2rem;" class="btn btn-search  btn-outline-primary">SELL </a>
+           </div>
+       </div>
+     </section>
+    <section>
+        <div class="store-body">
+            <% if(products[0]){
+         for(product of products){ %>
+            <a class="item" href="/store/<%=product._id%>">
+                <div class="card shopping-card" style="width: 18rem;">
+                    <img src="<%=product.image.url%>" class="card-img-top" alt="listing_image">
+                    <div class="card-body">
+                      <p class="card-text"> <h5><%=product.title%></h5>
+                        
+                        &#8377; <%=product.price.toLocaleString("en-IN")%>
+                    </p>
+                    </div>
+                  </div>
+            </a>
+       <% }
+          }else{  %> 
+            <h2 style="margin: 4rem auto;">NO RESULTS FOUND!</h2>
+         <% } %>  
+        </div>
+    </section>
+   
+</body>
