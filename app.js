@@ -38,6 +38,15 @@ const sessionObject={
 
     }
 }
+const isAuthor=async (req,res,next)=>{
+	let {reviewid,id}=req.params;
+	let review=await Review.findById(reviewid);
+	if(!review.author.equals(res.locals.currUser._id)){
+		req.flash("err","You are not author of this review!");
+		return res.redirect(`/listings/${id}`);
+	}
+	return next();
+}
 app.use(session(sessionObject));
 app.use(flash());
 app.use(passport.initialize());
@@ -92,7 +101,7 @@ const isLoggedIn=(req,res,next)=>{
     if(!req.isAuthenticated()){
         req.session.redirectUrl = req.originalUrl;
         req.flash("err","You must be Logged in!");
-        res.redirect("/login");
+       return res.redirect("/login");
     }
    return next();
 }
@@ -125,6 +134,7 @@ app.use((req,res,next)=>{
     res.locals.sucdel=req.flash("sucdel");
     res.locals.err=req.flash("err");
     res.locals.currUser=req.user;
+    req.session.cart=[];
   return  next();
 })
 
@@ -188,7 +198,7 @@ app.get('/ShikshaSaathi/apply',(req,res)=>{
     req.flash("suc","Applied Successfully, We will reach you out soon on your registered email");
     return res.redirect("/ShikshaSaathi");
 })
-app.post('/apply',(req,res)=>{
+app.post('/apply',saveRedirectUrl,(req,res)=>{
     req.flash("suc","Applied Successfully, We will reach you out soon on your registered email");
     let redirectUrl=res.locals.redirectUrl ||"/home";
     return  res.redirect(redirectUrl);    
@@ -199,6 +209,14 @@ app.get('/store',search,asyncWrap(async(req,res)=>{
     let products =await Product.find();
    return res.render("store.ejs",{products});
 }))
+app.get('/store/checkout',isLoggedIn,(req,res)=>{
+    res.render("checkout.ejs");
+})
+app.post('/store/checkout',isLoggedIn,(req,res)=>{
+   req.flash("suc","Order Successfully Placed!");
+   res.redirect("/store"); 
+})
+
 app.post('/store',upload.single('url'),isLoggedIn,asyncWrap(async(req,res)=>{
    let {path,filename}=req.file;
    let product=req.body.listings;
@@ -215,15 +233,21 @@ product.owner=res.locals.currUser._id;
    req.flash("suc","Listing Created successfully!");
   return  res.redirect("/store");
 }))
-app.patch('/store/:id',upload.single('url'),validateListing,asyncWrap(async(req,res)=>{
+app.patch('/store/:id',upload.single('url'),asyncWrap(async(req,res)=>{
     let {id}=req.params;
     let editproduct=req.body.listings;
     
    let product=await Product.findByIdAndUpdate(id,{...editproduct});
-   if(req.file.path){
+   if(typeof req.file !=="undefined"){
     let {path,filename}=req.file;
 product.image={url:path,filename:filename};
 }
+
+let result=listingSchema.validate(editproduct);
+       
+    if(result.error){
+        throw new ExpressError(400,result.error);
+    }
 await product.save();
 req.flash("sucdel","Listing was Edited!");
    return res.redirect(`/store/${id}`);
@@ -246,13 +270,21 @@ app.get('/store/:id/edit',asyncWrap(async(req,res)=>{
     image_url=image_url.replace("/upload","/upload/w_250");
   return  res.render("edit.ejs",{product,image_url});
 }))
+app.post('/store/:id/cart',saveRedirectUrl,asyncWrap(async(req,res)=>{
+    let {id}=req.params;
+    const product= await Product.findById(id);
+    req.session.cart.push(product);
+    req.flash("suc","Item added to cart");
+    return  res.redirect(`/store/${id}`);    
+
+}))
 app.get('/donate',asyncWrap((req,res)=>{
    return res.render("donate.ejs");
 }))
 app.get('/donation',(req,res)=>{
     res.render("donation.ejs");
 })
-app.post('/donate',(req,res)=>{
+app.post('/donate',saveRedirectUrl,(req,res)=>{
     req.flash("suc","Donation Successfully Done!");
     let redirectUrl=res.locals.redirectUrl ||"/home";
     return  res.redirect(redirectUrl);    
@@ -275,7 +307,7 @@ app.post('/store/:id/reviews',isLoggedIn,validateReview,asyncWrap(async(req,res)
    return res.redirect(`/store/${req.params.id}`);
 }))
 
-app.delete('/store/:id/reviews/:reviewid',isLoggedIn,asyncWrap(async (req,res)=>{
+app.delete('/store/:id/reviews/:reviewid',isLoggedIn,isAuthor,asyncWrap(async (req,res)=>{
     let {id,reviewid}=req.params;
     await Product.findByIdAndUpdate(id,{$pull :{review:reviewid}});
     await Review.findByIdAndDelete(reviewid);
@@ -283,19 +315,7 @@ app.delete('/store/:id/reviews/:reviewid',isLoggedIn,asyncWrap(async (req,res)=>
 req.flash("sucdel","Review deleted successfully!");
    return res.redirect(`/store/${id}`);
 }))
-// app.post('/search',async(req,res)=>{
-//     let q='';
-//     q=req.body.query;
-//     let products=await Product.find();
-//     if(q==''){
-      
-//         next()
-//     }
-//     products= products.filter((project) => (
-//         project.title.toLowerCase().includes(q.toLowerCase())
-//     ))
-//     return res.render('store.ejs',{products});
-// })
+
 
 app.all("*",asyncWrap((req,res,next)=>{
    return next(new ExpressError(404,"Page Not Found!"));

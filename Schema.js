@@ -9,7 +9,7 @@ module.exports.listingSchema=joi.object({
     image:joi.object({
         filename:joi.string().required(),
         url:joi.string().required(),
-    }).required(),
+    }),
 
 })
 module.exports.reviewSchema=joi.object(

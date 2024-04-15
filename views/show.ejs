@@ -33,9 +33,11 @@
                     <h6 class="owned-by">Posted By : </h6> <i> <%=product.owner.username %></i>
                 </div>
                 <div class="msg_block">
-                    <a class="store-btn btn btn-outline-primary">BUY NOW</a>
+                    <a class="store-btn btn btn-outline-primary" href="/store/checkout">BUY NOW</a>
                     
-                    <a class=" store-btn btn btn-outline-secondary">Add to cart</a>
+                    <form style="display: inline-block;" action="/store/<%=product._id%>/cart" method="post" >
+                        <button class=" store-btn btn btn-outline-secondary" >Add to cart</button>
+                    </form>
                 </div>
               
 
@@ -83,9 +85,10 @@
             <%}%>
         
    
-         <div class="card-container mb-3 row" >
+         
             
           <%if(product.review[0]){ %>
+            <div style="display: flex;flex-direction: row;justify-content: start;align-items: center;flex-wrap: wrap;" class="card-container mb-3 row" ></div>
             <% for(el of product.review) { %>
            
                 <div class="card mb-3 offset-1" style="width: 18rem;height:fit-content;">
@@ -95,14 +98,13 @@
                      <p class="card-text"><%=el.comment%></p>
                    </div>
                 
-              
-     <%if(currUser){%>
-          <%if(el.author.equals(currUser._id)){%>
+      
+         
         <form method="POST" action="/store/<%=product._id%>/reviews/<%=el._id%>?_method=DELETE" >
             <button class="btn btn-xs btn-dark mb-1">Delete</button></form>
             </div>
-       <%}%>
-       <%}%>
+    
+      
      
          <%}%>
             
