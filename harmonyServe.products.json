@@ -1,0 +1,127 @@
+[{
+  "_id": {
+    "$oid": "661d2c09746e1f3f9a42d4e9"
+  },
+  "image": {
+    "url": "https://res.cloudinary.com/dcspbmii5/image/upload/v1713187847/Harmony_Serve/velt9vvpiupksi0qtlze.jpg",
+    "filename": "Harmony_Serve/velt9vvpiupksi0qtlze"
+  },
+  "title": "Shoes",
+  "price": 499,
+  "category": "Shoes",
+  "description": "Good Quality\r\nDurable",
+  "location": "Varanasi",
+  "review": [
+    {
+      "$oid": "661d5858d9d0f85872f0b4d7"
+    },
+    {
+      "$oid": "661d6ebe3d5d629df1a2576a"
+    }
+  ],
+  "owner": {
+    "$oid": "661cd3e3f1306ceea23cdbeb"
+  },
+  "orders": [],
+  "__v": 6
+},
+{
+  "_id": {
+    "$oid": "661d6d2a3d5d629df1a2573a"
+  },
+  "image": {
+    "url": "https://res.cloudinary.com/dcspbmii5/image/upload/v1713204521/Harmony_Serve/s4axsvymvcsstjnt22gb.jpg",
+    "filename": "Harmony_Serve/s4axsvymvcsstjnt22gb"
+  },
+  "title": "Watch",
+  "price": 399,
+  "category": "Watches",
+  "description": "Elegant and luxurious watch with automatic movement and sapphire crystal.",
+  "location": "Dubai",
+  "review": [],
+  "owner": {
+    "$oid": "661cd3e3f1306ceea23cdbeb"
+  },
+  "orders": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "661d6d833d5d629df1a25742"
+  },
+  "image": {
+    "url": "https://res.cloudinary.com/dcspbmii5/image/upload/v1713204610/Harmony_Serve/wjzivnoab8kndskkwe7a.jpg",
+    "filename": "Harmony_Serve/wjzivnoab8kndskkwe7a"
+  },
+  "title": "Planner Diary",
+  "price": 99,
+  "category": "Stationary",
+  "description": "Plan your daily goals or give this diary a new purpose in life.",
+  "location": "Varanasi",
+  "review": [],
+  "owner": {
+    "$oid": "661cd3e3f1306ceea23cdbeb"
+  },
+  "orders": [],
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "661d6de83d5d629df1a2574a"
+  },
+  "image": {
+    "url": "https://res.cloudinary.com/dcspbmii5/image/upload/v1713204710/Harmony_Serve/ul2a2tr1gwruv4c1vwmc.jpg",
+    "filename": "Harmony_Serve/ul2a2tr1gwruv4c1vwmc"
+  },
+  "title": "PhotoFrame",
+  "price": 199,
+  "category": "Home Decor",
+  "description": "Add a touch of rustic charm to your home decor with our handcrafted wooden photo frame. Each frame is meticulously crafted by local artisans using reclaimed wood, giving it a unique and weathered appearance. Perfect for displaying your cherished memories, this photo frame adds warmth and character to any room. Showcase your favorite photographs in style with this timeless piece of craftsmanship",
+  "location": "Delhi",
+  "review": [],
+  "owner": {
+    "$oid": "661cd3e3f1306ceea23cdbeb"
+  },
+  "orders": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "661d6e4f3d5d629df1a25752"
+  },
+  "image": {
+    "url": "https://res.cloudinary.com/dcspbmii5/image/upload/v1713204814/Harmony_Serve/aeugcig5tiovtz3nn9ee.jpg",
+    "filename": "Harmony_Serve/aeugcig5tiovtz3nn9ee"
+  },
+  "title": "Multani Mitti Soap",
+  "price": 79,
+  "category": "Skin Care",
+  "description": "Pamper your skin with the goodness of nature with our artisanal Multani Mitti soap bar, carefully handcrafted by skilled artisans. Infused with the natural goodness of Multani Mitti (Fuller's Earth), this soap bar gently cleanses and detoxifies your skin, leaving it feeling refreshed and rejuvenated. Known for its deep cleansing and oil-absorbing properties, Multani Mitti helps unclog pores and remove impurities, giving you clear and glowing skin. Indulge in the luxurious lather and earthy fragrance of our Multani Mitti soap bar for a spa-like bathing experience every day.",
+  "location": "Jaipur",
+  "review": [],
+  "owner": {
+    "$oid": "661cd3e3f1306ceea23cdbeb"
+  },
+  "orders": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "661d6f363d5d629df1a257a2"
+  },
+  "image": {
+    "url": "https://res.cloudinary.com/dcspbmii5/image/upload/v1713205045/Harmony_Serve/owdghjdbw1ekp1nxzgwl.jpg",
+    "filename": "Harmony_Serve/owdghjdbw1ekp1nxzgwl"
+  },
+  "title": "Cycle",
+  "price": 3999,
+  "category": "Cycles",
+  "description": "Local Made Cycle ",
+  "location": "Varanasi",
+  "review": [],
+  "owner": {
+    "$oid": "661cd3e3f1306ceea23cdbeb"
+  },
+  "orders": [],
+  "__v": 0
+}]

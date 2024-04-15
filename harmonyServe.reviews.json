@@ -1,0 +1,28 @@
+[{
+  "_id": {
+    "$oid": "661d5858d9d0f85872f0b4d7"
+  },
+  "comment": "Good Quality\r\nA must buy product\r\n",
+  "rating": 5,
+  "created_at": {
+    "$date": "2024-04-15T16:39:21.165Z"
+  },
+  "author": {
+    "$oid": "661cd3e3f1306ceea23cdbeb"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "661d6ebe3d5d629df1a2576a"
+  },
+  "comment": "Very Good Quality",
+  "rating": 3,
+  "created_at": {
+    "$date": "2024-04-15T18:02:05.461Z"
+  },
+  "author": {
+    "$oid": "661cd3e3f1306ceea23cdbeb"
+  },
+  "__v": 0
+}]
