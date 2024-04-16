@@ -225,6 +225,37 @@ app.get('/store',search,asyncWrap(async(req,res)=>{
     let products =await Product.find();
    return res.render("store.ejs",{products});
 }))
+app.get('/store/cart',asyncWrap(async(req,res)=>{
+    if(req.session.cart.length){
+       const cart = await Product.find({ _id: { $in: req.session.cart } }).populate({path:"review",populate:{path:"author"}}).populate("owner");
+       let sum=0;
+       if(cart.review){
+        for(el of cart.review){
+            sum+=el.rating;
+           }
+           sum/=cart.review.length;
+       }
+       let price=0;
+      if(cart.length){
+        for(el of cart){
+            price+=el.price;
+           }
+      }
+       res.render("cart.ejs",{products:cart,sum,price});
+    }else{
+        
+       res.render("cart.ejs",{products:[]});
+    }
+   }))
+   app.post('/store/cart/:id',asyncWrap(async(req,res)=>{
+   const {id}=req.params;
+   const product=await Product.findById(id);
+   let cart=req.session.cart;
+
+cart = cart.splice(cart.indexOf(product), 1);
+    res.redirect("/store/cart");
+
+}))
 app.get('/store/checkout',isLoggedIn,(req,res)=>{
     res.render("checkout.ejs");
 })
@@ -286,15 +317,7 @@ app.get('/store/:id/edit',asyncWrap(async(req,res)=>{
     image_url=image_url.replace("/upload","/upload/w_250");
   return  res.render("edit.ejs",{product,image_url});
 }))
-app.get('/store/cart',asyncWrap(async(req,res)=>{
- if(req.session.cart.length()){
-    const cart = await Product.find({ _id: { $in: req.session.cart } });
-    res.render("cart.ejs",{cart});
- }else{
-    res.render("cart.ejs",{cart:[]});
-res.send("j");
- }
-}))
+
 app.post('/store/:id/cart',saveRedirectUrl,asyncWrap(async(req,res)=>{
     let {id}=req.params;
     let cart =req.session.cart;
@@ -306,9 +329,7 @@ app.post('/store/:id/cart',saveRedirectUrl,asyncWrap(async(req,res)=>{
     cart.push(id);
     req.flash("suc","Item added to cart");
     cart=req.session.cart;
-    return  res.redirect(`/store/${id}`);    
-console.log(req.session);
-res.send("hi");
+    return  res.redirect(`/store/${id}`);   
 }))
 
 app.get('/donate',asyncWrap((req,res)=>{

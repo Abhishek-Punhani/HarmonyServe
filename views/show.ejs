@@ -33,7 +33,7 @@
                     <h6 class="owned-by">Posted By : </h6> <i> <%=product.owner.username %></i>
                 </div>
                 <div class="msg_block">
-                    <a class="store-btn btn btn-outline-primary" href="/store/checkout">BUY NOW</a>
+                    <a class="store-btn btn btn-outline-primary" href="/store/checkout/:id">BUY NOW</a>
                     
                     <form style="display: inline-block;" action="/store/<%=product._id%>/cart" method="post" >
                         <button class=" store-btn btn btn-outline-secondary" >Add to cart</button>
