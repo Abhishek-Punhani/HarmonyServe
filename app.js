@@ -1,6 +1,7 @@
 
+if(process.env.NODE_ENV !="production"){
     require("dotenv").config();
-
+}
 const express=require('express');
 const app=express();
 const mongoose=require('mongoose');
@@ -32,16 +33,16 @@ app.engine("ejs",ejsMate);
 
 app.use(express.static("public"));
 app.use(express.static(path.join(__dirname,"public/")));
-// const store=MongoStore.create({
-//     mongoUrl:dbUrl,
-//     crypto:{
-//         secret:process.env.SECRET,
-//     },
-//     touchAfter:24*3600
-//     })    
+const store=MongoStore.create({
+    mongoUrl:dbUrl,
+    crypto:{
+        secret:process.env.SECRET,
+    },
+    touchAfter:24*3600
+    })    
    
 const sessionObject={
-    // store,
+    store,
     secret:"mysecret12333",
     resave:false,
     saveUninitialized:true,
@@ -75,7 +76,7 @@ main()
 .catch((err)=>console.log(err));
 
 async function main(){
-    await mongoose.connect("mongodb://localhost:27017/harmonyServe");
+    await mongoose.connect(dbUrl);
 }
 // function asyncWrap(fn){
 //     return function(req,res,next){
@@ -143,6 +144,7 @@ const search=async(req,res,next)=>{
         return  next()
 }
 }
+
 app.use((req,res,next)=>{
     res.locals.suc=req.flash("suc");
     res.locals.sucdel=req.flash("sucdel");
@@ -289,8 +291,7 @@ app.get('/store/cart',asyncWrap(async(req,res)=>{
     const cart = await Product.find({ _id: { $in: req.session.cart } });
     res.render("cart.ejs",{cart});
  }else{
-    let cart=[];
-    res.render("cart.ejs",{cart});
+    res.render("cart.ejs",{cart:[]});
 res.send("j");
  }
 }))
