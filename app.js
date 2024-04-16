@@ -1,6 +1,6 @@
-if(process.env.NODE_ENV !="production"){
+
     require("dotenv").config();
-}
+
 const express=require('express');
 const app=express();
 const mongoose=require('mongoose');
@@ -32,16 +32,16 @@ app.engine("ejs",ejsMate);
 
 app.use(express.static("public"));
 app.use(express.static(path.join(__dirname,"public/")));
-const store=MongoStore.create({
-    mongoUrl:dbUrl,
-    crypto:{
-        secret:process.env.SECRET,
-    },
-    touchAfter:24*3600
-    })    
+// const store=MongoStore.create({
+//     mongoUrl:dbUrl,
+//     crypto:{
+//         secret:process.env.SECRET,
+//     },
+//     touchAfter:24*3600
+//     })    
    
 const sessionObject={
-    store,
+    // store,
     secret:"mysecret12333",
     resave:false,
     saveUninitialized:true,
@@ -75,7 +75,7 @@ main()
 .catch((err)=>console.log(err));
 
 async function main(){
-    await mongoose.connect(dbUrl);
+    await mongoose.connect("mongodb://localhost:27017/harmonyServe");
 }
 // function asyncWrap(fn){
 //     return function(req,res,next){
@@ -148,7 +148,7 @@ app.use((req,res,next)=>{
     res.locals.sucdel=req.flash("sucdel");
     res.locals.err=req.flash("err");
     res.locals.currUser=req.user;
-    req.session.cart=[];
+     if(!(req.session.cart)) req.session.cart=[];
   return  next();
 })
 
@@ -284,14 +284,32 @@ app.get('/store/:id/edit',asyncWrap(async(req,res)=>{
     image_url=image_url.replace("/upload","/upload/w_250");
   return  res.render("edit.ejs",{product,image_url});
 }))
+app.get('/store/cart',asyncWrap(async(req,res)=>{
+ if(req.session.cart.length()){
+    const cart = await Product.find({ _id: { $in: req.session.cart } });
+    res.render("cart.ejs",{cart});
+ }else{
+    let cart=[];
+    res.render("cart.ejs",{cart});
+res.send("j");
+ }
+}))
 app.post('/store/:id/cart',saveRedirectUrl,asyncWrap(async(req,res)=>{
     let {id}=req.params;
-    const product= await Product.findById(id);
-    req.session.cart.push(product);
-    req.flash("suc","Item added to cart");
-    return  res.redirect(`/store/${id}`);    
+    let cart =req.session.cart;
 
+    if(cart.includes(id)){
+        req.flash("err","Item already added to cart");
+        return res.redirect(`/store/${id}`); 
+    }
+    cart.push(id);
+    req.flash("suc","Item added to cart");
+    cart=req.session.cart;
+    return  res.redirect(`/store/${id}`);    
+console.log(req.session);
+res.send("hi");
 }))
+
 app.get('/donate',asyncWrap((req,res)=>{
    return res.render("donate.ejs");
 }))
@@ -338,6 +356,6 @@ app.use((err,req,res,next)=>{
    let {status=501,message="some error occured"}= err;
   return res.render("error.ejs",{message})
    } );
-app.listen((8080),()=>{
+app.listen((3333),()=>{
     console.log("listening to port 8080");
 })
