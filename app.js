@@ -256,6 +256,9 @@ cart = cart.splice(cart.indexOf(product), 1);
     res.redirect("/store/cart");
 
 }))
+app.get('/store/myorders',(req,res)=>{
+    res.send("This Feature is not built yet");
+})
 app.get('/store/checkout',isLoggedIn,(req,res)=>{
     res.render("checkout.ejs");
 })
